@@ -1,17 +1,18 @@
 package com.adminportal.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class BillingAddress {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="billadd_seq")
+	@SequenceGenerator(name = "billadd_seq", sequenceName = "billadd_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private String BillingAddressName;
 	private String BillingAddressStreet1;

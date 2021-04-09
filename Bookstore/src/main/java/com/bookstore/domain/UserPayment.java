@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class UserPayment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="userpay_seq")
+	@SequenceGenerator(name = "userpay_seq", sequenceName = "userpay_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private String type;
 	private String cardName;

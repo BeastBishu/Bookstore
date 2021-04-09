@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,7 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class CartItem {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="cartitem_seq")
+	@SequenceGenerator(name = "cartitem_seq", sequenceName = "cartitem_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private int qty;
 	private BigDecimal subtotal;

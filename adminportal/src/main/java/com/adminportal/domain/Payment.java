@@ -6,12 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Payment {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="payment_seq")
+	@SequenceGenerator(name = "payment_seq", sequenceName = "payment_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private String type;
 	private String cardName;

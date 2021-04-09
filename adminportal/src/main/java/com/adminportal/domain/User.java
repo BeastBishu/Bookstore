@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,7 +27,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User implements UserDetails{
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="user_seq")
+	@SequenceGenerator(name = "user_seq", sequenceName = "user_seq", initialValue = 1, allocationSize=1)
 	@Column(name="id", nullable = false, updatable = false)
 	private Long id;
 	private String username;
@@ -49,6 +51,8 @@ public class User implements UserDetails{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<UserShipping> userShippingList;
 	
+	@OneToMany(mappedBy = "user")
+	private List<Order> orderList;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<UserPayment> userPaymentList;
@@ -127,6 +131,14 @@ public class User implements UserDetails{
 	}
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
+	}
+	
+	
+	public List<Order> getOrderList() {
+		return orderList;
+	}
+	public void setOrderList(List<Order> orderList) {
+		this.orderList = orderList;
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

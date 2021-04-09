@@ -6,12 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class UserShipping {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="usership_seq")
+	@SequenceGenerator(name = "usership_seq", sequenceName = "usership_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private String userShippingName;
 	private String userShippingStreet1;

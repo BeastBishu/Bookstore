@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	/* @Transactional */
+	@Transactional
 	public User createUser(User user, Set<UserRole> userRoles){
 		User localUser = userRepository.findByUsername(user.getUsername());
 		

@@ -14,6 +14,7 @@
 					<tr>
 						<th><input th:id="selectAllBooks" type="checkbox" /></th>
 						<th>Title</th>
+						<th>Edition</th>
 						<th>Author</th>
 						<th>Category</th>
 						<th>List Price</th>
@@ -29,6 +30,7 @@
 						<input th:id="'selected'+${book.id}" class="checkboxBook" type="checkbox" />
 						</td>
 						<td><a th:href="@{/book/bookInfo(id=${book.id})}"><span th:text="${book.title}"></span></a></td>
+						<td th:text="${book.edition}"></td>
 						<td th:text="${book.author}"></td>
 						<td th:text="${book.category}"></td>
 						<td th:text="${book.listPrice}"></td>

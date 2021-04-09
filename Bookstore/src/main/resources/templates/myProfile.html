@@ -11,16 +11,16 @@
 		<div class="row" style="margin-bottom: -100px;">
 			<div class="col-xs-4">
 
-				<img src="/image/logo.png" class="center1" />
+				<h1>Online bookstore using recommendation system</h1>
 
-				</h2>
-				</h2>
+				
 			</div>
 			<div class="col-xs-8">
 				<h2 class="section-headline">
 					<h2 class="section-headline"><span>HELLO<span
 							th:text="${user}? ${#strings.toUpperCase(user.username)} : 'All Books'"></span></span>
-						
+						</h2>
+				</h2>
 			</div>
 		</div>
 		
@@ -411,24 +411,14 @@
 											</div>
 											<div class="row">
 												<div class="col-xs-12">
-												<div class="col-xs-1">
-													<img src="/image/visa.png" width="150%" />
-													</div>
-													<div class="col-xs-1">
-													<img src="/image/cad.png" width="200%" />
-													</div>
-												<div class="col-xs-1">
-													<img src="/image/esewa.png" width="210%"  >
-													
-													</div>
-													<div class="col-xs-1">
-													<img src="/image/khaltii.png" width="500%" />
-													</div>
+												<div class="col-xs-4">
+													<img src="/image/cardinfo.png" width="100%" />
+											</div>
 													
 													
 													<br>
 													<br />
-													<div class="form-group">
+													<div class="form-group" style="margin-top:30px;">
 														<label for="cardType">* Select Card Type:</label> <select
 															class="form-control" id="cardType" th:name="type"
 															th:value="${userPayment.type}">

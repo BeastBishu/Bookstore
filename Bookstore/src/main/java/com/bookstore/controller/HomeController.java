@@ -1,6 +1,8 @@
 package com.bookstore.controller;
 
 import java.security.Principal;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -10,8 +12,11 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.websocket.server.PathParam;
 
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
+import org.apache.mahout.cf.taste.recommender.Recommender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -30,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bookstore.domain.Book;
 import com.bookstore.domain.CartItem;
 import com.bookstore.domain.Order;
+import com.bookstore.domain.Review;
 import com.bookstore.domain.User;
 import com.bookstore.domain.UserBilling;
 import com.bookstore.domain.UserPayment;
@@ -40,9 +46,11 @@ import com.bookstore.domain.security.UserRole;
 import com.bookstore.service.BookService;
 import com.bookstore.service.CartItemService;
 import com.bookstore.service.OrderService;
+import com.bookstore.service.ReviewService;
 import com.bookstore.service.UserPaymentService;
 import com.bookstore.service.UserService;
 import com.bookstore.service.UserShippingService;
+import com.bookstore.service.impl.RecommenderService;
 import com.bookstore.service.impl.UserSecurityService;
 import com.bookstore.utility.MailConstructor;
 import com.bookstore.utility.NepConstants;
@@ -70,6 +78,9 @@ public class HomeController {
 	private UserPaymentService userPaymentService;
 	
 	@Autowired
+	private RecommenderService recommenderService;
+	
+	@Autowired
 	private UserShippingService userShippingService;
 	
 	@Autowired
@@ -77,6 +88,9 @@ public class HomeController {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private ReviewService reviewService;
 
 	@RequestMapping("/")
 	public String index() {
@@ -88,6 +102,59 @@ public class HomeController {
 		model.addAttribute("classActiveLogin", true);
 		return "myAccount";
 	}
+	
+	@RequestMapping("/review")
+	public String review(@ModelAttribute("review")Review review,Model model,HttpServletRequest request,HttpServletResponse response) throws ClassNotFoundException, SQLException {
+		reviewService.save(review);
+		int bookid = review.getBookid();
+		int userid = review.getUserid();
+		int rating = review.getRating();
+		reviewService.saveRecommend(userid, bookid, rating);
+		
+		String id1 = request.getParameter("bookid");
+		Long id2 = (long) Integer.parseInt(id1);
+		
+		return "redirect:/bookDetail?id="+id2;
+	}
+	
+	
+	@RequestMapping("/recommend")
+	public String recommend(Model model,Principal principal) throws Exception {
+		
+		if(principal != null) {
+			String username = principal.getName();
+			User user = userService.findByUsername(username);
+			model.addAttribute("user", user);
+			int userid = user.getId().intValue();
+			
+			Recommender recommender = recommenderService.getRecommender();
+			  List<RecommendedItem> recommendations;
+
+			  recommendations = recommenderService.getRecommendations(recommender, userid, 5);
+			 recommenderService.displayRecommendations(userid, recommendations);
+			 
+			 List<Integer> bookid1 = new ArrayList<>(5);
+			 List<Long> bookid2 = new ArrayList<>(6);
+			 System.out.println("Recommendation for user "+userid);
+			 for (RecommendedItem recommendation : recommendations) {
+				   int bookid = (int) recommendation.getItemID();
+				   double value = recommendation.getValue();
+				   System.out.println("BookId: "+bookid);
+				   System.out.println("Similarity: "+value);
+				  bookid1.add(bookid);
+				  bookid2.add((long) bookid);
+				  }
+			 		List<Book> book = bookService.findAllById(bookid2);
+			 		for(Book b:book) {
+			 			System.out.println(b.getId());
+			 		}
+			 		Collections.sort(bookid1);
+					model.addAttribute("bookid", bookid1);
+					model.addAttribute("book", book);		
+		} 
+		return "recommend";
+	}
+	
 	
 	@RequestMapping("/bookshelf")
 	public String bookshelf(Model model, Principal principal) {
@@ -107,7 +174,7 @@ public class HomeController {
 	@RequestMapping("/bookDetail")
 	public String bookDetail(
 			@PathParam("id") Long id, Model model, Principal principal
-			) {
+			) throws ClassNotFoundException, SQLException {
 		if(principal != null) {
 			String username = principal.getName();
 			User user = userService.findByUsername(username);
@@ -115,7 +182,15 @@ public class HomeController {
 		}
 		
 		Book book = bookService.findById(id).orElse(new Book());
+
+		List<Review> thereview = reviewService.getReview(id);
+		List<String> theFeedback = reviewService.getFeedback(id);
 		
+		double rating = reviewService.getRating(id);
+		
+		model.addAttribute("review", thereview);
+		model.addAttribute("feedback", theFeedback);
+		model.addAttribute("rating",rating);
 		
 		model.addAttribute("book", book);
 		
@@ -172,7 +247,7 @@ public class HomeController {
 		model.addAttribute("user", user);
 		model.addAttribute("userPaymentList", user.getUserPaymentList());
 		model.addAttribute("userShippingList", user.getUserShippingList());
-		/*model.addAttribute("orderList", user.getOrderList());*/
+		model.addAttribute("orderList", user.getOrderList());
 		
 		UserShipping userShipping = new UserShipping();
 		model.addAttribute("userShipping", userShipping);

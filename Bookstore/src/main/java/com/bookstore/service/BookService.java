@@ -10,7 +10,15 @@ public interface BookService {
 	
 	Optional<Book> findById(Long id);
 	
+	
 	List<Book> findByCategory(String category);
 	
 	List<Book> blurrySearch(String title);
+
+	List<Book> findAllById(List<Long> bookid2);
+
+	
+
+//	public List<Book> findByIdIn(Long bookid3);
+
 }

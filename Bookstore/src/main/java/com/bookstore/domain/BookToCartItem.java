@@ -6,12 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class BookToCartItem {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="bookcart_seq")
+	@SequenceGenerator(name = "bookcart_seq", sequenceName = "bookcart_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	
 	@ManyToOne

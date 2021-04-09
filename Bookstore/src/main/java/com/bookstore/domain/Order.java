@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +20,8 @@ import javax.persistence.Table;
 public class Order {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="order_seq")
+	@SequenceGenerator(name = "order_seq", sequenceName = "order_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private Date orderDate;
 	private Date shippingDate;

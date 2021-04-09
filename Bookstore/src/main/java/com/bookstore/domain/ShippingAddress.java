@@ -5,11 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class ShippingAddress {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="shipping_seq")
+	@SequenceGenerator(name = "shipping_seq", sequenceName = "shipping_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private String ShippingAddressName;
 	private String ShippingAddressStreet1;

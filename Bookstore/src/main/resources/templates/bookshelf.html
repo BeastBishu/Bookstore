@@ -11,7 +11,7 @@
 		 <div class="row" style="margin-bottom: -100px;">
         <div class="col-xs-4">
         
-        <img src="/image/logo.png" class="center1"/>
+        <h1>Online bookstore using recommendation system</h1>
             
                 </h2>
             </h2>
@@ -19,7 +19,7 @@
         <div class="col-xs-8">
             <h2 class="section-headline1">
                 <h2 class="section-headline1">
-                    <span th:text="${user}? ${#strings.toUpperCase(user.username)} : 'Books Of Hamro Books'"></span>
+                    <span  >Books Of Hamro Books</span>
         </div>
     </div>
     
@@ -36,6 +36,9 @@
 					<a th:href="@{/searchByCategory(category='Engineering')}" th:classappend="${activeEngineering}? 'active'" class="list-group-item">Engineering</a>
 					<a th:href="@{/searchByCategory(category='Programming')}" th:classappend="${activeProgramming}? 'active'" class="list-group-item">Programming</a>
 					<a th:href="@{/searchByCategory(category='Arts &amp; Literature')}" th:classappend="${activeArtsLiterature}? 'active'" class="list-group-item">Arts &amp; Literature</a>
+					<a th:href="@{/searchByCategory(category='Thriller')}" th:classappend="${activeThriller}? 'active'" class="list-group-item">Thriller</a>
+					<a th:href="@{/searchByCategory(category='Action &amp; Adventure')}" th:classappend="${activeActionAdventure}? 'active'" class="list-group-item">Action &amp; Adventure</a>
+					<a th:href="@{/searchByCategory(category='Literature &amp; Fiction')}" th:classappend="${activeLiteratureFiction}? 'active'" class="list-group-item">Literature &amp; Fiction</a>
 				</div>
 			</div>
 			<div class="col-xs-9">

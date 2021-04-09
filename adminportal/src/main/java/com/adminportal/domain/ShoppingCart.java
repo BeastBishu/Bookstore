@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,7 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class ShoppingCart {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="shopcart_seq")
+	@SequenceGenerator(name = "shopcart_seq", sequenceName = "shopcart_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private BigDecimal GrandTotal;
 	

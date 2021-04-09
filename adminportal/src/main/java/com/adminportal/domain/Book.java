@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +19,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Book {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="book_seq")
+	@SequenceGenerator(name = "book_seq", sequenceName = "book_seq", initialValue = 41, allocationSize=1)
 	private Long id;
 	private String title;
+	private String edition;
 	private String author;
 	private String publisher;
 	private String publicationDate;
@@ -59,6 +62,15 @@ public class Book {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	
+	public String getEdition() {
+		return edition;
+	}
+
+	public void setEdition(String edition) {
+		this.edition = edition;
 	}
 
 	public String getAuthor() {

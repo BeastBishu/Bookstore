@@ -6,12 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class UserBilling {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="userbill_seq")
+	@SequenceGenerator(name = "userbill_seq", sequenceName = "userbill_seq", initialValue = 1, allocationSize=1)
 	private Long id;
 	private String userBillingName;
 	private String userBillingStreet1;

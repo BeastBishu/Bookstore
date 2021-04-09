@@ -1,16 +1,17 @@
 
 <!doctype html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head th:replace="common/header :: common-header" />
 
 <body>
 
 	<div th:replace="common/header :: navbar" />
-
+ <h1> <span th:text="${user}? ${(user.id)}"></span></h1>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-4">
-				<img src="/image/logo.png" class="center1">
+				<h1>Online bookstore using recommendation system</h1>
 			</div>
 
 			<!-- carousel -->
@@ -85,10 +86,11 @@
   		</div>
 		</div>
 		</div>
+		 
 		
 		<br>
 		<div>
-			<div class="home-headline1" style="margin-top:20px">
+			<div class="home-headline1" style="margin-top:30px">
 				<span>Featured books</span>
 			</div>
 			
@@ -111,17 +113,17 @@
 					<div class="item active">
 						<div class="row">
 							
-							<div class="col-xs-2 col-xs-offset-2">
-								<img class="img-responsive" src="/image/book3.png">
+							<div class="col-xs-2 col-xs-offset-2 hover">
+								<a th:href="@{bookDetail?id=5}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+5+'.png'"></a>
 							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive" src="/image/book1.png">
+							<div class="col-xs-2 hover">
+								<a th:href="@{bookDetail?id=2}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+2+'.png'"></a>
 							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive" src="/image/book2.png">
+							<div class="col-xs-2 hover">
+								<a th:href="@{bookDetail?id=6}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+6+'.png'"></a>
 							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive"  src="/image/book3.png">
+							<div class="col-xs-2 hover">
+								<a th:href="@{bookDetail?id=3}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+3+'.png'"></a>
 							</div>
 							
 						</div>
@@ -129,37 +131,21 @@
 					<div class="item">
 						<div class="row">
 							
-							<div class="col-xs-2 col-xs-offset-2">
-								<img class="img-responsive" src="/image/book3.png">
+							<div class="col-xs-2 col-xs-offset-2 hover">
+								<a th:href="@{bookDetail?id=1}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+1+'.png'"></a>
 							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive" src="/image/book1.png">
+							<div class="col-xs-2 hover">
+								<a th:href="@{bookDetail?id=9}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+9+'.png'"></a>
 							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive" src="/image/book2.png">
+							<div class="col-xs-2 hover">
+								<a th:href="@{bookDetail?id=10}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+10+'.png'"></a>
 							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive"  src="/image/book3.png">
-							</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="row">
-							
-							<div class="col-xs-2 col-xs-offset-2">
-								<img class="img-responsive" src="/image/book3.png">
-							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive" src="/image/book1.png">
-							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive" src="/image/book2.png">
-							</div>
-							<div class="col-xs-2">
-								<img class="img-responsive"  src="/image/book3.png">
+							<div class="col-xs-2 hover">
+								<a th:href="@{bookDetail?id=8}"><img class="img-responsive" th:src="#{adminPath}+@{/image/book/}+8+'.png'"></a>
 							</div>
 						</div>
 					</div>
+					
 				</div>
 
 				<!-- Controls -->
@@ -211,6 +197,10 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
 	</div>
 	<!-- end of container -->
 
